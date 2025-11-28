@@ -56,13 +56,14 @@ public class EventoController {
                 eventoData.put("lugar", evento.getLugar());
                 eventoData.put("descripcion", evento.getDescripcion());
 
-                // Manejar organizador de forma segura
+                // Manejar organizador de forma segura - enviar como objeto
                 if (evento.getOrganizador() != null) {
-                    eventoData.put("organizador", evento.getOrganizador().getNombre());
-                    eventoData.put("organizadorId", evento.getOrganizador().getId());
+                    Map<String, Object> organizadorData = new HashMap<>();
+                    organizadorData.put("idOrganizador", evento.getOrganizador().getId());
+                    organizadorData.put("nombreOrganizador", evento.getOrganizador().getNombre());
+                    eventoData.put("organizador", organizadorData);
                 } else {
-                    eventoData.put("organizador", "Sin organizador");
-                    eventoData.put("organizadorId", null);
+                    eventoData.put("organizador", null);
                 }
 
                 return eventoData;
@@ -227,8 +228,15 @@ public class EventoController {
             eventoData.put("hora", eventoActualizado.getHora().toString());
             eventoData.put("lugar", eventoActualizado.getLugar());
             eventoData.put("descripcion", eventoActualizado.getDescripcion());
-            eventoData.put("organizador", eventoActualizado.getOrganizador().getNombre());
-            eventoData.put("organizadorId", eventoActualizado.getOrganizador().getId());
+
+            if (eventoActualizado.getOrganizador() != null) {
+                Map<String, Object> organizadorData = new HashMap<>();
+                organizadorData.put("idOrganizador", eventoActualizado.getOrganizador().getId());
+                organizadorData.put("nombreOrganizador", eventoActualizado.getOrganizador().getNombre());
+                eventoData.put("organizador", organizadorData);
+            } else {
+                eventoData.put("organizador", null);
+            }
 
             response.put("success", true);
             response.put("message", "Evento actualizado exitosamente");
@@ -297,8 +305,12 @@ public class EventoController {
             eventoData.put("descripcion", evento.getDescripcion());
 
             if (evento.getOrganizador() != null) {
-                eventoData.put("organizador", evento.getOrganizador().getNombre());
-                eventoData.put("organizadorId", evento.getOrganizador().getId());
+                Map<String, Object> organizadorData = new HashMap<>();
+                organizadorData.put("idOrganizador", evento.getOrganizador().getId());
+                organizadorData.put("nombreOrganizador", evento.getOrganizador().getNombre());
+                eventoData.put("organizador", organizadorData);
+            } else {
+                eventoData.put("organizador", null);
             }
 
             response.put("success", true);
